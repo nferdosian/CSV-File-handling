@@ -1,29 +1,33 @@
 import csv
-import pandas
-import statistics
 
-# Read the entire CSV file into a pandas DataFrame
-df = pandas.read_csv('myfile4.csv')
-print("df to string")
-print(df.to_string())
+def main():
+    # Load the data from the CSV file
+    file_name = 'myfile4.csv'
+    data = []
+    
+    with open(file_name, mode='r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            data.append(row)
 
-# Filter out the column, value_eur
-temp_values = df['Temp']
-print("temp values",type(temp_values),temp_values)
-mean_value_temp = round(statistics.mean(temp_values), 2)
-print("Mean Value Temp:", mean_value_temp)
-noise_values = df['Noise']
-mean_value_noise = round(statistics.mean(noise_values), 2)
-print("Mean Value Noise:", mean_value_noise)
-"""
-with open('myfile4.csv', 'r') as file:
-    # Create a CSV reader object
-    csv_reader = csv.reader(file)
-    # Iterate over each row in the CSV file
-    print("Printing rows")
-    num1 = 0
-    for row in csv_reader:
-        # Print the value of the cell at index 2 (3rd cell in the row)
-        print(row[0],row[1])
-        #num1 = num1 + float(row[0])
-    """    
+    # Display the full dataset
+    print("\nFull Dataset:")
+    print(f"{'Day':<10} {'Temp':<10} {'Noise':<10}")
+    for row in data:
+        print(f"{row['Day']:<10} {row['Temp']:<10} {row['Noise']:<10}")
+
+    # Extract "Temp" and "Noise" columns
+    temp_values = [float(row['Temp']) for row in data]
+    noise_values = [float(row['Noise']) for row in data]
+
+    # Calculate statistics
+    avg_temp = round(sum(temp_values) / len(temp_values), 2)
+    avg_noise = round(sum(noise_values) / len(noise_values), 2)
+
+    # Display the results
+    print("\nStatistics:")
+    print(f"Average Temperature: {avg_temp}°C")
+    print(f"Average Noise Level: {avg_noise} dB")
+
+if __name__ == "__main__":
+    main()
