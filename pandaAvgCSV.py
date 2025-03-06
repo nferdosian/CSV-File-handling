@@ -1,29 +1,26 @@
-import csv
-import pandas
-import statistics
+import pandas as pd
 
-# Read the entire CSV file into a pandas DataFrame
-df = pandas.read_csv('myfile4.csv')
-print("df to string")
-print(df.to_string())
+def main():
+    # Load the data from the CSV file
+    file_name = 'myfile4.csv'
+    data = pd.read_csv(file_name)
 
-# Filter out the column, value_eur
-temp_values = df['Temp']
-print("temp values",type(temp_values),temp_values)
-mean_value_temp = round(statistics.mean(temp_values), 2)
-print("Mean Value Temp:", mean_value_temp)
-noise_values = df['Noise']
-mean_value_noise = round(statistics.mean(noise_values), 2)
-print("Mean Value Noise:", mean_value_noise)
-"""
-with open('myfile4.csv', 'r') as file:
-    # Create a CSV reader object
-    csv_reader = csv.reader(file)
-    # Iterate over each row in the CSV file
-    print("Printing rows")
-    num1 = 0
-    for row in csv_reader:
-        # Print the value of the cell at index 2 (3rd cell in the row)
-        print(row[0],row[1])
-        #num1 = num1 + float(row[0])
-    """    
+    # Display the full dataset
+    print("\nFull Dataset:")
+    print(data)
+
+    # Extract "Temp" and "Noise" columns
+    temp_values = data['Temp']
+    noise_values = data['Noise']
+
+    # Calculate statistics
+    avg_temp = round(temp_values.mean(), 2)
+    avg_noise = round(noise_values.mean(), 2)
+
+    # Display the results
+    print("\nStatistics:")
+    print("Average Temperature:", avg_temp)
+    print("Average Noise Level:", avg_noise)
+
+if __name__ == "__main__":
+    main()
